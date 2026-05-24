@@ -1,7 +1,6 @@
 package enums;
 
-public enum BoookingStatus {
-
+public enum BookingStatus {
     CREATED,
     CONFIRMED,
     CANCELLED,

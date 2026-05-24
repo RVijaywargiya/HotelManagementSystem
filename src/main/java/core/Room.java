@@ -1,12 +1,11 @@
 package core;
 
 import enums.RoomStatus;
-import enums.RoomType;
 
 public abstract class Room {
 
     private final String roomNumber;
-    private double basePrice;
+    private final double basePrice;
     private RoomStatus status;
 
     public Room(String roomNumber, double basePrice) {
@@ -49,4 +48,7 @@ public abstract class Room {
     }
 
 
+    public void setStatus(RoomStatus status) {
+        this.status = status;
+    }
 }
