@@ -68,4 +68,8 @@ public class Booking {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
     }
+
+    public BookingStatus getStatus() {
+        return status;
+    }
 }

@@ -4,11 +4,11 @@ import enums.RoomStatus;
 
 public abstract class Room {
 
-    private final String roomNumber;
+    private final int roomNumber;
     private final double basePrice;
     private RoomStatus status;
 
-    public Room(String roomNumber, double basePrice) {
+    public Room(int roomNumber, double basePrice) {
         this.roomNumber = roomNumber;
         this.basePrice = basePrice;
         this.status = RoomStatus.AVAILABLE;

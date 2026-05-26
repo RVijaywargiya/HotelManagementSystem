@@ -10,6 +10,14 @@ public class Customer {
     private String phoneNumber;
     private List<Booking> bookings;
 
+    public Customer(String customerId, String name, String email, String phoneNumber, List<Booking> bookings) {
+        this.customerId = customerId;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.bookings = bookings;
+    }
+
     void createBooking(Booking booking) {
         bookings.add(booking);
     }
