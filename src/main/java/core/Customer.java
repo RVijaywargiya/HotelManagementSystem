@@ -1,6 +1,7 @@
 package core;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Customer {
 
@@ -8,25 +9,43 @@ public class Customer {
     private String name;
     private String email;
     private String phoneNumber;
-    private List<Booking> bookings;
 
-    public Customer(String customerId, String name, String email, String phoneNumber, List<Booking> bookings) {
-        this.customerId = customerId;
+    public Customer(String name, String email, String phoneNumber) {
+        this.customerId = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.bookings = bookings;
     }
 
-    void createBooking(Booking booking) {
-        bookings.add(booking);
+    public String getCustomerId() {
+        return customerId;
     }
 
-    void cancelBooking(Booking booking) {
-        bookings.remove(booking);
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
-    void viewBookingHistory() {
-        bookings.forEach(System.out::println);
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

@@ -17,7 +17,7 @@ public class Booking {
     private Payment payment;
     private BookingStatus status;
 
-    public Booking(Customer customer, List<Room> rooms, LocalDate checkInDate, LocalDate checkOutDate, Payment payment) {
+    public Booking(Customer customer, List<Room> rooms, LocalDate checkInDate, LocalDate checkOutDate) {
         if (checkOutDate.isBefore(checkInDate)) {
             throw new IllegalArgumentException("Invalid booking dates");
         }
@@ -25,7 +25,6 @@ public class Booking {
         this.rooms = rooms;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
-        this.payment = payment;
         this.status = BookingStatus.CREATED;
     }
 
@@ -71,5 +70,17 @@ public class Booking {
 
     public BookingStatus getStatus() {
         return status;
+    }
+
+    public void setStatus(BookingStatus bookingStatus) {
+        this.status = bookingStatus;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 }

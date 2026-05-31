@@ -14,10 +14,16 @@ public class Main {
 
         List<Room> rooms = List.of(room1, room2, room3);
 
-        List<Booking> bookings = new ArrayList<>();
+        rooms.stream().forEach( room -> System.out.println(room.getRoomNumber().toString()));
 
-        Customer customer1 = new Customer("111","John", "johndoe@gmail.com", "22344", bookings);
+         List<Booking> bookings = new ArrayList<>();
 
-        Booking booking = new Booking(customer1, rooms, LocalDate.of(2026, 12, 3), LocalDate.of(2026, 12, 6), );
+         Customer customer1 = new Customer("John", "johndoe@gmail.com", "22344");
+
+         Booking booking1 = new Booking(customer1, rooms, LocalDate.of(2026,2,2), LocalDate.of(2026, 2, 4));
+
+         Payment payment = new Payment(23, booking1);
+
+
     }
 }
