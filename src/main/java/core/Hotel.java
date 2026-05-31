@@ -24,7 +24,7 @@ public class Hotel {
     }
 
     void createBooking(Customer customer, Room room) {
-
+        bookings.stream().forEach(booking -> );
     }
 
     void cancelBooking(String bookingId) {

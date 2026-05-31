@@ -1,6 +1,7 @@
 package core;
 
 import enums.BookingStatus;
+import enums.PaymentStatus;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -10,14 +11,14 @@ import java.util.UUID;
 public class Booking {
 
     private String bookingId;
-    private Customer customer;
+    private final Customer customer;
     private List<Room> rooms;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private Payment payment;
     private BookingStatus status;
 
-    public Booking(Customer customer, List<Room> rooms, LocalDate checkInDate, LocalDate checkOutDate) {
+    public Booking(Customer customer, List<Room> rooms, LocalDate checkInDate, LocalDate checkOutDate, Payment payment) {
         if (checkOutDate.isBefore(checkInDate)) {
             throw new IllegalArgumentException("Invalid booking dates");
         }
@@ -26,25 +27,35 @@ public class Booking {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.status = BookingStatus.CREATED;
+        this.payment = payment;
     }
 
     public void confirmBooking() {
-        generateBookingId();
-        for (Room room : rooms) {
-            room.occupyRoon();
+        double billAmount = calculateBill();
+        if (Double.compare(billAmount, payment.getAmount()) == 0) {
+            payment.processPayment();
+            bookingId = generateBookingId();
+            for (Room room : rooms) {
+                room.occupyRoom();
+            }
+            status = BookingStatus.CONFIRMED;
+        } else {
+            System.out.println("Please pay the whole amount");
         }
-        this.status = BookingStatus.CONFIRMED;
     }
 
-    private void generateBookingId() {
-        this.bookingId = UUID.randomUUID().toString();
+    private String generateBookingId() {
+        bookingId = UUID.randomUUID().toString();
+        return bookingId;
+
     }
 
     public void cancelBooking() {
-        this.status = BookingStatus.CANCELLED;
+        status = BookingStatus.CANCELLED;
         for (Room room : rooms) {
             room.vacateRoom();
         }
+        payment.refundPayment();
     }
 
     public double calculateBill() {
@@ -60,7 +71,7 @@ public class Booking {
     }
 
     public void generateInvoice() {
-
+        System.out.println("Invoice generated for booking " + bookingId);
     }
 
     public void updateBookingDates(LocalDate checkInDate, LocalDate checkOutDate) {

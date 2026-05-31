@@ -1,10 +1,8 @@
 package core;
 
-import enums.BookingStatus;
 import enums.PaymentStatus;
-import enums.RoomStatus;
+import enums.PaymentType;
 
-import java.util.List;
 import java.util.UUID;
 
 public class Payment {
@@ -12,33 +10,29 @@ public class Payment {
     private String paymentId;
     private PaymentStatus paymentStatus;
     private final double amount;
-    private final Booking booking;
+    private final PaymentType paymentType;
 
-    public Payment(double amount, Booking booking) {
+    public Payment(double amount, PaymentType paymentType) {
         this.amount = amount;
-        this.booking = booking;
+        this.paymentType = paymentType;
         this.paymentStatus = PaymentStatus.PENDING;
     }
 
     public void processPayment() {
-        double billAmount = booking.calculateBill();
-        if (Double.compare(amount, billAmount) == 0) {
-            paymentStatus = PaymentStatus.SUCCESS;
-            paymentId = UUID.randomUUID().toString();
-            System.out.println("Payment success. Payment id is " + paymentId);
-            booking.setStatus(BookingStatus.CONFIRMED);
-        } else {
-            System.out.println("Please enter full amount to complete the payment");
-            paymentStatus = PaymentStatus.FAILED;
+        if (paymentStatus == PaymentStatus.SUCCESS) {
+            return;
         }
+        paymentStatus = PaymentStatus.SUCCESS;
+        paymentId = UUID.randomUUID().toString();
+        System.out.println("Payment success. Payment id is " + paymentId);
     }
 
     public void refundPayment() {
-        if (this.paymentStatus == PaymentStatus.SUCCESS && isAnyRoomOccupied()) {
-            System.out.println("A booked room has been occupied. Payment cannot be refunded now!!!");
-        } else {
-            this.paymentStatus = PaymentStatus.REFUNDED;
-            this.booking.setStatus(BookingStatus.CANCELLED);
+        if (paymentStatus == PaymentStatus.SUCCESS) {
+            System.out.println("Refund initiated for amount : " + amount);
+            paymentStatus = PaymentStatus.REFUNDED;
+        } else if (paymentStatus == PaymentStatus.REFUNDED) {
+            System.out.println("Amount already refunded");
         }
     }
 
@@ -56,18 +50,24 @@ public class Payment {
            Payment Id: %s
            Amount: %.2f
            Status: %s
+           Payment type: %s
            """.formatted(
                 paymentId,
                 amount,
-                paymentStatus
+                paymentStatus,
+                paymentType
         );
     }
 
-    private boolean isAnyRoomOccupied() {
-        List<Room> occupiedRooms = this.booking.getRooms().stream().filter(room -> room.getStatus() == RoomStatus.OCCUPIED).toList();
-        return !occupiedRooms.isEmpty();
-
+    public String getPaymentId() {
+        return paymentId;
     }
 
+    public double getAmount() {
+        return amount;
+    }
 
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
 }

@@ -5,7 +5,7 @@ import core.Room;
 public class SingleRoomPricingStrategy implements PricingStrategy{
 
     @Override
-    public double getTariff(Room room) {
-        return 100;
+    public double calculatePrice(Room room, int numberOfDays) {
+        return 0;
     }
 }

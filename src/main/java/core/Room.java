@@ -21,11 +21,11 @@ public abstract class Room {
         return this.status == RoomStatus.AVAILABLE;
     }
 
-    public void occupyRoon() {
-        this.status = RoomStatus.OCCUPIED;
+    public void occupyRoom() {
+        this.status = RoomStatus.BOOKED;
     }
 
-    public String getRoomNumber() {
+    public int getRoomNumber() {
         return roomNumber;
     }
 

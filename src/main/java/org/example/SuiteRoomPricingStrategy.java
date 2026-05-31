@@ -3,8 +3,9 @@ package org.example;
 import core.Room;
 
 public class SuiteRoomPricingStrategy implements PricingStrategy{
+
     @Override
-    public double getTariff(Room room) {
-        return 300;
+    public double calculatePrice(Room room, int numberOfDays) {
+        return 0;
     }
 }
