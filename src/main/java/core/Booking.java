@@ -94,4 +94,24 @@ public class Booking {
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public LocalDate getCheckInDate() {
+        return checkInDate;
+    }
+
+    public LocalDate getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
 }
